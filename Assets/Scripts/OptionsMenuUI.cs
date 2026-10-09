@@ -1,20 +1,30 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class OptionsMenuUI : MonoBehaviour
     {
+        [Header("Sliders")]
         [SerializeField] private Slider bgmSlider;
         [SerializeField] private Slider sfxSlider;
+
+        [Header("Buttons")]
+        [SerializeField] private Button btnOK;
 
         private void Awake()
         {
             Transform panel = transform.Find("OptionsPanel");
             if (panel != null)
             {
-                Button btnOK = panel.Find("BtnOK")?.GetComponent<Button>();
-                if (btnOK != null) btnOK.onClick.AddListener(OnOKButtonPressed);
+                if (btnOK == null) btnOK = panel.Find("BtnOK")?.GetComponent<Button>();
+                if (bgmSlider == null) bgmSlider = panel.Find("BGMSlider")?.GetComponent<Slider>();
+                if (sfxSlider == null) sfxSlider = panel.Find("SFXSlider")?.GetComponent<Slider>();
+            }
+
+            if (btnOK != null)
+            {
+                btnOK.onClick.AddListener(OnOKButtonPressed);
             }
         }
 
@@ -36,19 +46,31 @@ namespace TanesHemburud
         public void OnBGMVolumeChanged(float value)
         {
             GameData.BGMVolume = value;
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.SetBGMVolume(value);
+            }
         }
 
         public void OnSFXVolumeChanged(float value)
         {
             GameData.SFXVolume = value;
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.SetSFXVolume(value);
+            }
         }
 
         public void OnOKButtonPressed()
         {
             if (SceneNavigationManager.Instance != null)
-                SceneNavigationManager.Instance.UnloadOptionsAdditive();
+            {
+                SceneNavigationManager.Instance.LoadMainMenu();
+            }
             else
-                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Options");
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+            }
         }
     }
 }

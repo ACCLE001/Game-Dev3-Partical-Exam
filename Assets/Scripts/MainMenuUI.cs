@@ -2,24 +2,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class MainMenuUI : MonoBehaviour
     {
         [SerializeField] private TMP_Text studentInfoText;
 
+        [Header("Buttons")]
+        [SerializeField] private Button btnStart;
+        [SerializeField] private Button btnOptions;
+        [SerializeField] private Button btnCredits;
+        [SerializeField] private Button btnExit;
+
         private void Awake()
         {
-            Button btnStart = transform.Find("BtnStart")?.GetComponent<Button>();
+            if (btnStart == null) btnStart = transform.Find("BtnStart")?.GetComponent<Button>();
+            if (btnOptions == null) btnOptions = transform.Find("BtnOptions")?.GetComponent<Button>();
+            if (btnCredits == null) btnCredits = transform.Find("BtnCredits")?.GetComponent<Button>();
+            if (btnExit == null) btnExit = transform.Find("BtnExit")?.GetComponent<Button>();
+
             if (btnStart != null) btnStart.onClick.AddListener(OnStartButtonPressed);
-
-            Button btnOptions = transform.Find("BtnOptions")?.GetComponent<Button>();
             if (btnOptions != null) btnOptions.onClick.AddListener(OnOptionsButtonPressed);
-
-            Button btnCredits = transform.Find("BtnCredits")?.GetComponent<Button>();
             if (btnCredits != null) btnCredits.onClick.AddListener(OnCreditsButtonPressed);
-
-            Button btnExit = transform.Find("BtnExit")?.GetComponent<Button>();
             if (btnExit != null) btnExit.onClick.AddListener(OnExitButtonPressed);
         }
 
@@ -47,9 +51,9 @@ namespace TanesHemburud
         public void OnOptionsButtonPressed()
         {
             if (SceneNavigationManager.Instance != null)
-                SceneNavigationManager.Instance.LoadOptionsAdditive();
+                SceneNavigationManager.Instance.LoadOptions();
             else
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Options", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Options");
         }
 
         public void OnCreditsButtonPressed()

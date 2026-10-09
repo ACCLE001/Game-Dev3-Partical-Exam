@@ -2,18 +2,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class WinGameOverUI : MonoBehaviour
     {
         [SerializeField] private TMP_Text scoreText;
+        [SerializeField] private Button btnTryAgain;
+        [SerializeField] private Button btnBackToMain;
 
         private void Awake()
         {
-            Button btnTryAgain = transform.Find("BtnTryAgain")?.GetComponent<Button>();
-            if (btnTryAgain != null) btnTryAgain.onClick.AddListener(OnTryAgainButtonPressed);
+            if (btnTryAgain == null) btnTryAgain = transform.Find("BtnTryAgain")?.GetComponent<Button>();
+            if (btnTryAgain == null) btnTryAgain = transform.Find("BtnPlayAgain")?.GetComponent<Button>();
+            if (btnBackToMain == null) btnBackToMain = transform.Find("BtnBackToMain")?.GetComponent<Button>();
 
-            Button btnBackToMain = transform.Find("BtnBackToMain")?.GetComponent<Button>();
+            if (btnTryAgain != null) btnTryAgain.onClick.AddListener(OnTryAgainButtonPressed);
             if (btnBackToMain != null) btnBackToMain.onClick.AddListener(OnBackToMainMenuButtonPressed);
         }
 

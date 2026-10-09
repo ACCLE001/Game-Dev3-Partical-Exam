@@ -2,21 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class StageSelectionUI : MonoBehaviour
     {
         [SerializeField] private TMP_Text studentInfoText;
 
+        [Header("Buttons")]
+        [SerializeField] private Button btnStage1;
+        [SerializeField] private Button btnStage2;
+        [SerializeField] private Button btnBack;
+
         private void Awake()
         {
-            Button btnStage1 = transform.Find("BtnStage1")?.GetComponent<Button>();
+            if (btnStage1 == null) btnStage1 = transform.Find("BtnStage1")?.GetComponent<Button>();
+            if (btnStage2 == null) btnStage2 = transform.Find("BtnStage2")?.GetComponent<Button>();
+            if (btnBack == null) btnBack = transform.Find("BtnBack")?.GetComponent<Button>();
+
             if (btnStage1 != null) btnStage1.onClick.AddListener(OnStage1ButtonPressed);
-
-            Button btnStage2 = transform.Find("BtnStage2")?.GetComponent<Button>();
             if (btnStage2 != null) btnStage2.onClick.AddListener(OnStage2ButtonPressed);
-
-            Button btnBack = transform.Find("BtnBack")?.GetComponent<Button>();
             if (btnBack != null) btnBack.onClick.AddListener(OnBackButtonPressed);
         }
 
@@ -29,7 +33,7 @@ namespace TanesHemburud
 
             if (studentInfoText != null)
             {
-                studentInfoText.text = $"Student Code: {GameData.StudentCode} Name: {GameData.StudentName}";
+                studentInfoText.text = $"Student Code: {GameData.StudentCode}\nName: {GameData.StudentName} ({GameData.StudentNameEnglish})";
             }
         }
 

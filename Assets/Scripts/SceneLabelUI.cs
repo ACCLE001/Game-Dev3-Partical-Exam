@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class SceneLabelUI : MonoBehaviour
     {

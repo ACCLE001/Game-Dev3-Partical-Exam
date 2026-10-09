@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class SceneNavigationManager : MonoBehaviour
     {
@@ -59,31 +59,27 @@ namespace TanesHemburud
             SceneManager.LoadScene("GameOver");
         }
 
+        public void LoadOptions()
+        {
+            SceneManager.LoadScene("Options");
+        }
+
         public void LoadCredits()
         {
             SceneManager.LoadScene("Credits");
         }
 
-        public void LoadOptionsAdditive()
-        {
-            if (!SceneManager.GetSceneByName("Options").isLoaded)
-            {
-                SceneManager.LoadSceneAsync("Options", LoadSceneMode.Additive);
-            }
-        }
-
-        public void UnloadOptionsAdditive()
-        {
-            if (SceneManager.GetSceneByName("Options").isLoaded)
-            {
-                SceneManager.UnloadSceneAsync("Options");
-            }
-        }
-
         public void TryAgain()
         {
             GameData.ResetGameData();
-            SceneManager.LoadScene(GameData.LastPlayedStage);
+            if (!string.IsNullOrEmpty(GameData.LastPlayedStage))
+            {
+                SceneManager.LoadScene(GameData.LastPlayedStage);
+            }
+            else
+            {
+                SceneManager.LoadScene("Stage1");
+            }
         }
 
         public void QuitGame()

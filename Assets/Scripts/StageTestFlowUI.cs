@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class StageTestFlowUI : MonoBehaviour
     {

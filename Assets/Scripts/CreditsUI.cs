@@ -2,35 +2,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace TanesHemburud
+namespace ThanethHamburut
 {
     public class CreditsUI : MonoBehaviour
     {
         [SerializeField] private TMP_Text creditsDetailText;
         [SerializeField] private TMP_Text studentInfoText;
+        [SerializeField] private Button btnBack;
 
         private void Awake()
         {
             Transform panel = transform.Find("CreditsPanel");
             if (panel != null)
             {
-                Button btnBack = panel.Find("BtnBack")?.GetComponent<Button>();
-                if (btnBack != null) btnBack.onClick.AddListener(OnBackButtonPressed);
+                if (btnBack == null) btnBack = panel.Find("BtnBack")?.GetComponent<Button>();
+                if (creditsDetailText == null) creditsDetailText = panel.Find("TitleLabel")?.GetComponent<TMP_Text>();
+                if (studentInfoText == null) studentInfoText = panel.Find("StudentInfo")?.GetComponent<TMP_Text>();
+            }
+
+            if (btnBack != null)
+            {
+                btnBack.onClick.AddListener(OnBackButtonPressed);
             }
         }
 
         private void Start()
         {
-            if (creditsDetailText == null)
-            {
-                creditsDetailText = transform.Find("CreditsPanel/TitleLabel")?.GetComponent<TMP_Text>();
-            }
-
-            if (studentInfoText == null)
-            {
-                studentInfoText = transform.Find("CreditsPanel/StudentInfo")?.GetComponent<TMP_Text>();
-            }
-
             if (creditsDetailText != null)
             {
                 creditsDetailText.text = "Credits";
@@ -38,7 +35,7 @@ namespace TanesHemburud
 
             if (studentInfoText != null)
             {
-                studentInfoText.text = $"Student Code: {GameData.StudentCode}\nName: {GameData.StudentName} ({GameData.StudentNameEnglish})";
+                studentInfoText.text = $"Course: 958321 Game Development 3\nPractical Examination 1/2569\n\nStudent Code: {GameData.StudentCode}\nName: {GameData.StudentName} ({GameData.StudentNameEnglish})";
             }
         }
 
