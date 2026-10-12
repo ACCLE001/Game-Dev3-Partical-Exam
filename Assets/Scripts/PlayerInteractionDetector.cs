@@ -23,6 +23,7 @@ namespace ThanethHamburut
         [SerializeField] private bool canInteract = true;
 
         private IInteractable currentInteractable;
+        private readonly Collider[] hitBuffer = new Collider[16];
 
         public IInteractable CurrentInteractable => currentInteractable;
         public bool CanInteract { get => canInteract; set => canInteract = value; }
@@ -48,14 +49,16 @@ namespace ThanethHamburut
             Vector3 origin = detectionOrigin != null ? detectionOrigin.position : transform.position;
             origin += Vector3.up * 0.5f;
 
-            Collider[] hits = Physics.OverlapSphere(origin, detectionRadius, interactableLayers);
+            // Zero-allocation sphere check for optimal performance
+            int hitCount = Physics.OverlapSphereNonAlloc(origin, detectionRadius, hitBuffer, interactableLayers);
 
             IInteractable bestTarget = null;
             float closestDistance = float.MaxValue;
 
-            foreach (var hit in hits)
+            for (int i = 0; i < hitCount; i++)
             {
-                if (hit.gameObject == gameObject) continue;
+                Collider hit = hitBuffer[i];
+                if (hit == null || hit.gameObject == gameObject) continue;
 
                 var interactable = hit.GetComponent<IInteractable>() ?? hit.GetComponentInParent<IInteractable>();
                 if (interactable != null)
@@ -96,7 +99,14 @@ namespace ThanethHamburut
 
             if (isInteractTriggered)
             {
-                currentInteractable.Interact(this);
+                var target = currentInteractable;
+                target.Interact(this);
+                // Clear immediately after interaction
+                if (currentInteractable == target)
+                {
+                    currentInteractable = null;
+                    OnInteractableTargetChanged?.Invoke(null);
+                }
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -137,6 +137,15 @@ namespace StarterAssets
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
             _hasAnimator = TryGetComponent(out _animator);
+            if (!_hasAnimator || !_animator.enabled)
+            {
+                var childAnimator = GetComponentInChildren<Animator>();
+                if (childAnimator != null)
+                {
+                    _animator = childAnimator;
+                    _hasAnimator = true;
+                }
+            }
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
