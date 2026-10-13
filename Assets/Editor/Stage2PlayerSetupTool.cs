@@ -15,19 +15,7 @@ namespace ThanethHamburut.EditorTools
         private const string TargetPlayerPrefabPath = "Assets/Prefabs/HumanoidPlayer.prefab";
         private const string Stage2ScenePath = "Assets/Scenes/Stage2.unity";
 
-        [InitializeOnLoadMethod]
-        private static void AutoRunOnCompile()
-        {
-            EditorApplication.delayCall += () =>
-            {
-                if (!SessionState.GetBool("Stage2PlayerConfigured_Done", false))
-                {
-                    SessionState.SetBool("Stage2PlayerConfigured_Done", true);
-                    ConfigureStage2Player();
-                }
-            };
-        }
-
+        // Manual menu item only - do not auto-run on Editor startup
         [MenuItem("Tools/ThanethHamburut/Configure Stage 2 Player (Q6)")]
         public static void ConfigureStage2Player()
         {

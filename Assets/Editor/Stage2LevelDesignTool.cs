@@ -15,19 +15,7 @@ namespace ThanethHamburut.EditorTools
         private const string PlayerFollowCameraPrefabPath = "Assets/Starter Assets/Runtime/ThirdPersonController/Prefabs/PlayerFollowCamera.prefab";
         private const string MainCameraPrefabPath = "Assets/Starter Assets/Runtime/ThirdPersonController/Prefabs/MainCamera.prefab";
 
-        [InitializeOnLoadMethod]
-        private static void AutoRunOnCompile()
-        {
-            EditorApplication.delayCall += () =>
-            {
-                if (!SessionState.GetBool("Stage2LevelDesign_Q7_Done", false))
-                {
-                    SessionState.SetBool("Stage2LevelDesign_Q7_Done", true);
-                    BuildStage2Level();
-                }
-            };
-        }
-
+        // Manual menu item only - do not auto-run on Editor startup
         [MenuItem("Tools/ThanethHamburut/Build Stage 2 Level (Q7)")]
         public static void BuildStage2Level()
         {
